@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "outFile": "./src/index.js",
+    "target": "esnext"
+  }
+}

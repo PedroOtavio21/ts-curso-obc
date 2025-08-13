@@ -47,6 +47,10 @@ function addMember(name: string, spaceshipTarget: number){
     spaceships[spaceshipTarget].crew.push(name)
 }
 
+function isSpaceshipFull(spaceshipTarget: number){
+    return spaceships[spaceshipTarget].crew.length === spaceships[spaceshipTarget].crewLimit
+}
+
 function getNewMemberInfo(){
     let name: string = String(prompt('Insira o nome do novo membro:'))
     let spaceshipTarget: number = Number(prompt('Insira o indice da espaçonave desejada:'))
@@ -63,6 +67,10 @@ function getNewMemberInfo(){
         return alert('Nave desejada não existe. Tente novamente')
     }
 
+    if (isSpaceshipFull(spaceshipTarget)){
+        return alert('Nave desejada se encontra em capacidade máxima. Tente novamente')
+    }
+
     addMember(name, spaceshipTarget)
     return alert('Membro salvo com sucesso em tripulação!')
 }
@@ -72,8 +80,8 @@ function sendSpaceshipToMission(spaceshipTarget: number){
     spaceships[spaceshipTarget].inMission = true
 }
 
-function getMinCrew(spaceshipTarget: number){
-
+function verifyCrewCapacity(spaceshipTarget: number){
+    return spaceships[spaceshipTarget].crew.length >= Math.floor(spaceships[spaceshipTarget].crewLimit / 3)
 }
 
 function getSpaceshipMissionInfo(){
@@ -84,11 +92,15 @@ function getSpaceshipMissionInfo(){
     }
 
     if (spaceships[spaceshipTarget].inMission) {
-        return alert('A nave escolhida já se encontra em missão')
+        return alert('A nave escolhida já se encontra em missão. Tente novamente')
     }
 
-    if (spaceships[spaceshipTarget].crew.length)
-        Math.floor()
+    if (!verifyCrewCapacity(spaceshipTarget)) {
+        return alert('A nave possui uma tripulação insuficiente para ser enviada em missão.')
+    }
+
+    sendSpaceshipToMission(spaceshipTarget)
+    return alert('A nave foi enviada em missão!')
 }
 
 // Quarto método
@@ -126,10 +138,10 @@ function execute(){
                 getSpaceshipInfos()
                 break
             case 2:
-                // getNewMemberInfo()
+                getNewMemberInfo()
                 break
             case 3:
-                // sendSpaceshipToMission()
+                getSpaceshipMissionInfo()
                 break
             case 4:
                 listSpaceships()

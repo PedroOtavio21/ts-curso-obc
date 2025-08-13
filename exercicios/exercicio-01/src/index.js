@@ -30,6 +30,9 @@ function saveSpaceship(name, pilot, crewLimit) {
 function addMember(name, spaceshipTarget) {
     spaceships[spaceshipTarget].crew.push(name);
 }
+function isSpaceshipFull(spaceshipTarget) {
+    return spaceships[spaceshipTarget].crew.length === spaceships[spaceshipTarget].crewLimit;
+}
 function getNewMemberInfo() {
     var name = String(prompt('Insira o nome do novo membro:'));
     var spaceshipTarget = Number(prompt('Insira o indice da espaçonave desejada:'));
@@ -42,6 +45,9 @@ function getNewMemberInfo() {
     if (spaceships[spaceshipTarget] === undefined) {
         return alert('Nave desejada não existe. Tente novamente');
     }
+    if (isSpaceshipFull(spaceshipTarget)) {
+        return alert('Nave desejada se encontra em capacidade máxima. Tente novamente');
+    }
     addMember(name, spaceshipTarget);
     return alert('Membro salvo com sucesso em tripulação!');
 }
@@ -49,7 +55,8 @@ function getNewMemberInfo() {
 function sendSpaceshipToMission(spaceshipTarget) {
     spaceships[spaceshipTarget].inMission = true;
 }
-function getMinCrew(spaceshipTarget) {
+function verifyCrewCapacity(spaceshipTarget) {
+    return spaceships[spaceshipTarget].crew.length >= Math.floor(spaceships[spaceshipTarget].crewLimit / 3);
 }
 function getSpaceshipMissionInfo() {
     var spaceshipTarget = Number(prompt('Insira a nave que será enviada em missão:'));
@@ -57,10 +64,13 @@ function getSpaceshipMissionInfo() {
         return alert('Valor de nave alvo inserido inválido. Tente novamente');
     }
     if (spaceships[spaceshipTarget].inMission) {
-        return alert('A nave escolhida já se encontra em missão');
+        return alert('A nave escolhida já se encontra em missão. Tente novamente');
     }
-    if (spaceships[spaceshipTarget].crew.length)
-        Math.floor();
+    if (!verifyCrewCapacity(spaceshipTarget)) {
+        return alert('A nave possui uma tripulação insuficiente para ser enviada em missão.');
+    }
+    sendSpaceshipToMission(spaceshipTarget);
+    return alert('A nave foi enviada em missão!');
 }
 // Quarto método
 function listSpaceships() {
@@ -85,10 +95,10 @@ function execute() {
                 getSpaceshipInfos();
                 break;
             case 2:
-                // getNewMemberInfo()
+                getNewMemberInfo();
                 break;
             case 3:
-                // sendSpaceshipToMission()
+                getSpaceshipMissionInfo();
                 break;
             case 4:
                 listSpaceships();

@@ -29,6 +29,6 @@ Para isso é preciso que 1/3 da sua tripulação esteja preenchida, arredondando
 [x] - Elaborar menu de visualização de métodos
 [x] - Criar método de execução do programa
 [x] - Criar método 1
-[ ] - Criar método 2
-[ ] - Criar método 3
-[ ] - Criar método 4
+[x] - Criar método 2
+[x] - Criar método 3
+[x] - Criar método 4
